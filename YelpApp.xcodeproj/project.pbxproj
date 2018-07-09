@@ -15,6 +15,9 @@
 		1B2680C120F3BD870043CC53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2680C020F3BD870043CC53 /* Assets.xcassets */; };
 		1B2680C420F3BD870043CC53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2680C220F3BD870043CC53 /* LaunchScreen.storyboard */; };
 		1B2680CF20F3BD870043CC53 /* YelpAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680CE20F3BD870043CC53 /* YelpAppTests.swift */; };
+		1B2680DA20F3C6F80043CC53 /* AdvanceSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680D920F3C6F80043CC53 /* AdvanceSearchVC.swift */; };
+		1B2680DD20F3CAFA0043CC53 /* SearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680DC20F3CAFA0043CC53 /* SearchCriteria.swift */; };
+		1B2680E520F3DB2B0043CC53 /* AdvanceSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680E420F3DB2B0043CC53 /* AdvanceSearchCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		1B2680CA20F3BD870043CC53 /* YelpAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B2680CE20F3BD870043CC53 /* YelpAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpAppTests.swift; sourceTree = "<group>"; };
 		1B2680D020F3BD870043CC53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1B2680D920F3C6F80043CC53 /* AdvanceSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvanceSearchVC.swift; sourceTree = "<group>"; };
+		1B2680DC20F3CAFA0043CC53 /* SearchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCriteria.swift; sourceTree = "<group>"; };
+		1B2680E420F3DB2B0043CC53 /* AdvanceSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvanceSearchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,9 @@
 		1B2680B320F3BD850043CC53 /* YelpApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B2680E320F3DAD80043CC53 /* View */,
+				1B2680E020F3CBBE0043CC53 /* ViewModel */,
+				1B2680DB20F3CAD90043CC53 /* Model */,
 				1B2680B420F3BD850043CC53 /* AppDelegate.swift */,
 				1B2680B920F3BD850043CC53 /* MasterViewController.swift */,
 				1B2680BB20F3BD850043CC53 /* DetailViewController.swift */,
@@ -89,6 +98,7 @@
 				1B2680C220F3BD870043CC53 /* LaunchScreen.storyboard */,
 				1B2680C520F3BD870043CC53 /* Info.plist */,
 				1B2680B620F3BD850043CC53 /* YelpApp.xcdatamodeld */,
+				1B2680D920F3C6F80043CC53 /* AdvanceSearchVC.swift */,
 			);
 			path = YelpApp;
 			sourceTree = "<group>";
@@ -100,6 +110,29 @@
 				1B2680D020F3BD870043CC53 /* Info.plist */,
 			);
 			path = YelpAppTests;
+			sourceTree = "<group>";
+		};
+		1B2680DB20F3CAD90043CC53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1B2680DC20F3CAFA0043CC53 /* SearchCriteria.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1B2680E020F3CBBE0043CC53 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1B2680E320F3DAD80043CC53 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1B2680E420F3DB2B0043CC53 /* AdvanceSearchCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,10 +236,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B2680DD20F3CAFA0043CC53 /* SearchCriteria.swift in Sources */,
 				1B2680B520F3BD850043CC53 /* AppDelegate.swift in Sources */,
 				1B2680B820F3BD850043CC53 /* YelpApp.xcdatamodeld in Sources */,
+				1B2680E520F3DB2B0043CC53 /* AdvanceSearchCell.swift in Sources */,
 				1B2680BA20F3BD850043CC53 /* MasterViewController.swift in Sources */,
 				1B2680BC20F3BD850043CC53 /* DetailViewController.swift in Sources */,
+				1B2680DA20F3C6F80043CC53 /* AdvanceSearchVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

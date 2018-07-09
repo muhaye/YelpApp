@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
@@ -68,6 +68,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
+        } else if segue.identifier == "showAdvanceSearch" {
+            
+            if let advanceSeachVC = segue.destination as? AdvanceSearchVC {
+                advanceSeachVC.popoverPresentationController!.delegate = self
+            }
+
         }
     }
 
@@ -192,5 +198,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
      }
      */
 
+    
+    // Mark: - UIPopoverPresentationControllerDelegate
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    
+
+    
 }
 

@@ -13,7 +13,11 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-
+    
+    lazy var searchCriteria = [SearchCriteria(name: .name, checked: true),
+                               SearchCriteria(name: .address),
+                               SearchCriteria(name: .city),
+                               SearchCriteria(name: .postalCode)]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
