@@ -9,7 +9,30 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController, UIPopoverPresentationControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate {
+
+class MasterViewController: UITableViewController,
+UIPopoverPresentationControllerDelegate,
+UISearchDisplayDelegate,
+UISearchBarDelegate,
+UISearchResultsUpdating,
+UISearchControllerDelegate,
+LocationUser {
+    
+    func notAuthorize() {
+
+        let msg = "Location services are not enabled"
+        let alert = UIAlertController(title: "Did you allow Location service?", message: msg , preferredStyle: .alert)
+        self.present(alert, animated: true)
+        print(msg);
+    }
+    
+    func gotLocation(coordinate: (lat: Double, lon: Double)) {
+
+        ApiManager().search( coordinate: (coordinate.lat, coordinate.lon), completion:{
+            
+        })
+    }
+    
     
 
     var detailViewController: DetailViewController? = nil
@@ -18,8 +41,36 @@ class MasterViewController: UITableViewController, UIPopoverPresentationControll
     var resultsTableController: SResultsTableController?
     var searchController: UISearchController!
 
+    var locationManager: LocationManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationManager = LocationManager(user: self)
+        
+        
+//        if (CLLocationManager.locationServicesEnabled()) {
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//            locationManager.requestWhenInUseAuthorization()
+//            locationManager.startUpdatingLocation()
+//
+//
+//        } else {
+//            let msg = "Location services are not enabled"
+//
+//            let alert = UIAlertController(title: "Did you allow Location service?", message: msg , preferredStyle: .alert)
+//            self.present(alert, animated: true)
+//
+//            print(msg);
+//        }
+//
+        
+
+    
+    
+
+        
         // Do any additional setup after loading the view, typically from a nib.
 
 //        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
@@ -158,4 +209,6 @@ class MasterViewController: UITableViewController, UIPopoverPresentationControll
     }
     
 }
+
+
 

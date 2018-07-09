@@ -21,6 +21,7 @@
 		1B2680E720F3E4660043CC53 /* SResultsTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680E620F3E4660043CC53 /* SResultsTableController.swift */; };
 		1B2680E920F3E8380043CC53 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680E820F3E8380043CC53 /* GlobalConstants.swift */; };
 		1B2680EB20F3E9970043CC53 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680EA20F3E9970043CC53 /* ApiManager.swift */; };
+		1B2680EE20F3FD060043CC53 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2680ED20F3FD060043CC53 /* LocationManager.swift */; };
 		2099CC054E36521C67922D73 /* Pods_YelpApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83D807ACED0E16C84219BE7 /* Pods_YelpApp.framework */; };
 		72CA12397225415997A42163 /* Pods_YelpAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C34CFEA1EE68BF8FCDE50 /* Pods_YelpAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -54,6 +55,7 @@
 		1B2680E620F3E4660043CC53 /* SResultsTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SResultsTableController.swift; sourceTree = "<group>"; };
 		1B2680E820F3E8380043CC53 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		1B2680EA20F3E9970043CC53 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		1B2680ED20F3FD060043CC53 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		3881F9DF6C03CFFD0B10B3B7 /* Pods-YelpApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YelpApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-YelpApp/Pods-YelpApp.release.xcconfig"; sourceTree = "<group>"; };
 		3B74B0DF512CBFBD1A4E6BE9 /* Pods-YelpAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YelpAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YelpAppTests/Pods-YelpAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		6C1D53D46B9E0DBC84EB0405 /* Pods-YelpAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YelpAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YelpAppTests/Pods-YelpAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		1B2680B320F3BD850043CC53 /* YelpApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B2680EC20F3EB470043CC53 /* Manager */,
 				1B2680E320F3DAD80043CC53 /* View */,
 				1B2680E020F3CBBE0043CC53 /* ViewModel */,
 				1B2680DB20F3CAD90043CC53 /* Model */,
@@ -119,7 +122,6 @@
 				1B2680B620F3BD850043CC53 /* YelpApp.xcdatamodeld */,
 				1B2680D920F3C6F80043CC53 /* AdvanceSearchVC.swift */,
 				1B2680E820F3E8380043CC53 /* GlobalConstants.swift */,
-				1B2680EA20F3E9970043CC53 /* ApiManager.swift */,
 			);
 			path = YelpApp;
 			sourceTree = "<group>";
@@ -154,6 +156,15 @@
 				1B2680E420F3DB2B0043CC53 /* AdvanceSearchCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1B2680EC20F3EB470043CC53 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				1B2680EA20F3E9970043CC53 /* ApiManager.swift */,
+				1B2680ED20F3FD060043CC53 /* LocationManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		558B8941CB239E86525DF50D /* Frameworks */ = {
@@ -340,6 +351,7 @@
 				1B2680DD20F3CAFA0043CC53 /* SearchCriteria.swift in Sources */,
 				1B2680E920F3E8380043CC53 /* GlobalConstants.swift in Sources */,
 				1B2680EB20F3E9970043CC53 /* ApiManager.swift in Sources */,
+				1B2680EE20F3FD060043CC53 /* LocationManager.swift in Sources */,
 				1B2680E720F3E4660043CC53 /* SResultsTableController.swift in Sources */,
 				1B2680B520F3BD850043CC53 /* AppDelegate.swift in Sources */,
 				1B2680B820F3BD850043CC53 /* YelpApp.xcdatamodeld in Sources */,
