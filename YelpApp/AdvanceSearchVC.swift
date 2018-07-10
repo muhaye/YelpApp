@@ -12,12 +12,8 @@ class AdvanceSearchVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var tableView: UITableView!
     
-    var searchCriteria = AppDelegate().searchCriteria
-    let check = UIImage(named:"check")
-    let unchecked = UIImage(named:"unchecked")
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var searchCriteria: [SearchCriteria] {
+        return Session.shared.searchCriteria
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,9 +34,8 @@ class AdvanceSearchVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        searchCriteria[ indexPath.row].checked = !searchCriteria[ indexPath.row].checked
+        Session.shared.searchCriteria[ indexPath.row].checked = !searchCriteria[ indexPath.row].checked
         self.tableView.reloadRows(at: [indexPath], with: .automatic)
-    
     }
 
 }

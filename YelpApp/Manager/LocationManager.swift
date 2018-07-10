@@ -14,14 +14,12 @@ protocol LocationUser {
     func gotLocation(coordinate:(lat: Double, lon: Double))
 }
 
-
 class LocationManager:  NSObject, CLLocationManagerDelegate {
 
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
     let user: LocationUser
-
     
     init(user: LocationUser) {
         self.user = user
@@ -46,7 +44,6 @@ class LocationManager:  NSObject, CLLocationManagerDelegate {
     
 
     
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
     }
@@ -54,7 +51,9 @@ class LocationManager:  NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: Array <CLLocation>) {
         
         if let  coo = locations.last?.coordinate {
-            user.gotLocation(coordinate: (coo.latitude, lon: coo.longitude))
+            
+            Session.shared.coordinate = (coo.latitude, lon: coo.longitude)
+            // user.gotLocation(coordinate: )
         }
         
     }

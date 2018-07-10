@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import CoreData
 
 public protocol WSItem {
     func json() -> [String:Any]
@@ -25,17 +26,12 @@ open class ApiManager {
     
     //open func search(completion : @escaping (_ changes: PublishDate?)-> Void) {
 
-//    Alamofire.request(AppConfig.MyUrl,method: .post ,parameters : params,encoding: JSONEncoding.default ,headers:headers).responseJSON {response in
-
     let headers = [ "Authorization": "Bearer \(GlobalConstants.clientKey)" ]
 
-    
-    
     open func search(coordinate: (lat: Double, lon: Double), completion : @escaping ()-> Void) {
         
         let url = "\(GlobalConstants.api)\(Service.business.rawValue)"
         print("request \( url) ")
-        
         
         let parameters: Parameters = [
             "latitude": "\(coordinate.lat)",
@@ -52,16 +48,21 @@ open class ApiManager {
             .response { (response) in
                 
                 if  let data = response.data {
-                    
-                    
                     do {
                         let jsonDecoder = JSONDecoder()
-                        
-                        
                         print("response \(String(describing: String(data: data, encoding: .utf8)))")
 
                         //jsonDecoder.dateDecodingStrategy = PublishDate.dateDecodingStrategy()
-                        //let publishDate = try jsonDecoder.decode(PublishDate.self, from: data)
+                        let jBusinessRes = try jsonDecoder.decode(JBusinessRes.self, from: data)
+                        for jBusiness in jBusinessRes.businesses {
+                            
+                            if let business: Business = NSManagedObject.managedObjectUpsert(jBusiness.id) {
+                                
+                                _ = business.populate(with: jBusiness)
+                            }
+                            
+                        }
+                        
                         //completion(publishDate)
                     } catch {
                         

@@ -11,12 +11,12 @@ import CoreData
 
 
 class MasterViewController: UITableViewController,
-UIPopoverPresentationControllerDelegate,
-UISearchDisplayDelegate,
-UISearchBarDelegate,
-UISearchResultsUpdating,
-UISearchControllerDelegate,
-LocationUser {
+    UIPopoverPresentationControllerDelegate,
+    UISearchDisplayDelegate,
+    UISearchBarDelegate,
+    UISearchResultsUpdating,
+    UISearchControllerDelegate,
+    LocationUser {
     
     func notAuthorize() {
 
@@ -176,7 +176,7 @@ LocationUser {
 //
 //        return _fetchedResultsController!
 //    }
-    var _fetchedResultsController: NSFetchedResultsController<Event>? = nil
+//    var _fetchedResultsController: NSFetchedResultsController<Event>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
