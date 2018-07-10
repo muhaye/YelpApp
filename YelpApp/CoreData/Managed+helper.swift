@@ -39,6 +39,34 @@ extension NSManagedObject {
         return nil
     }
     
+    class func managedObjectUpsert(_ hours_type: String, business: Business) -> Hour? {
+        
+        if let entityName = Hour.entity().name {
+            
+            let fetchRequest        = NSFetchRequest<Hour>(entityName: entityName )
+            let predicate           = NSPredicate(format: "hours_type = %@ AND business.objectId = %@ ", hours_type, business.objectId! )
+            fetchRequest.predicate  = predicate
+            do{
+                let results = try managedObjectContext.fetch(fetchRequest)
+                
+                if let managedObject = results.first  {
+                    return managedObject
+                } else if let hour = NSEntityDescription.insertNewObject(forEntityName: entityName, into: managedObjectContext) as? Hour {
+                    
+                    hour.hours_type = hours_type
+                    hour.business = business
+                    return hour
+                }
+                
+            }catch let error{
+                print("Got error, sending throught\(error)")
+            }
+        }
+        
+        return nil
+    }
+    
+    
     class func new<T: NSManagedObject>() -> T? {
         
         if let entityName = T.entity().name {

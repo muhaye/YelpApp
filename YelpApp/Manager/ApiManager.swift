@@ -17,20 +17,18 @@ public protocol WSItem {
 
 
 public enum Service : String {
-    case business    = "/search"
+    case business           = "/search"
+    case businessDetail     = "/{id}" // businesses/{id}
+
 }
 
 open class ApiManager {
     
     public init() {}
-    
-    //open func search(completion : @escaping (_ changes: PublishDate?)-> Void) {
 
     let headers = [ "Authorization": "Bearer \(GlobalConstants.clientKey)" ]
 
-    //open func search(coordinate: (lat: Double, lon: Double), completion : @escaping ()-> Void) {
-    open func search( completion : @escaping ()-> Void) {
-
+    open func search(completion : @escaping ()-> Void) {
         
         let url = "\(GlobalConstants.api)\(Service.business.rawValue)"
         print("request \( url) ")
@@ -69,13 +67,24 @@ open class ApiManager {
                                 
                                 business.location = NSManagedObject.new()
                                 business.location?.populate(with: jBusiness.location)
+                                
+                                if let categories = jBusiness.categories {
+                                    business.categoires = []
+                                    for jcat in categories {
+                                        if let category: Category = NSManagedObject.new() {
+                                            category.title = jcat.title
+                                            business.addToCategoires(category)
+                                        }
+                                    }
+                                    
+                                }
+                                
+
                             }
-                            
                         }
                         
                         DBUtils.sharedInstance.saveContext()
                         
-                        //completion(publishDate)
                     } catch {
                         
                         print("response \(error.localizedDescription)")
@@ -89,6 +98,75 @@ open class ApiManager {
                 }
         }
     }
+    
+    open func business(id: String, completion : @escaping ()-> Void) {
+        
+        let url = "\(GlobalConstants.api)\( Service.businessDetail.rawValue.replacingOccurrences(of: "{id}", with: id)  )"
+        print("request \( url) ")
+        
+        Alamofire.request(url,
+                          method: .get,
+                          encoding: URLEncoding.queryString,
+                          headers: headers
+            )
+            .validate(statusCode: 200..<300)
+            .response { (response) in
+                
+                if  let data = response.data {
+                    do {
+                        let jsonDecoder = JSONDecoder()
+                        print("response \(String(describing: String(data: data, encoding: .utf8)))")
+                        
+                        let jBusiness = try jsonDecoder.decode(JBusiness.self, from: data)
+                        
+                        if let business: Business = NSManagedObject.managedObjectUpsert(jBusiness.id) {
+                            
+                            if let hours = jBusiness.hours {
+                                
+                                for jhour in hours {
+                                    
+                                    if let hour = NSManagedObject.managedObjectUpsert(jhour.hours_type, business: business) {
+                                        
+                                        hour.open = [] // clear preview data
+                                        for jopen in jhour.open {
+                                            if let open: Open = NSManagedObject.new() {
+                                                open.day            = Int32(jopen.day)
+                                                open.start          = jopen.start
+                                                open.end            = jopen.end
+                                                //open.is_overnight   = jopen.is_overnight
+                                                hour.addToOpen(open)
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                        DBUtils.sharedInstance.saveContext()
+                        
+                        //completion(publishDate)
+                    } catch {
+                        
+                        print("response \(error.localizedDescription)")
+                        completion()
+                    }
+                    
+                    completion()
+                    
+                } else {
+                    completion()
+                }
+        }
+    }
+    
+    
+    private func storeData(data: Data) {
+    
+    
+    }
+    
     
 }
 

@@ -13,6 +13,7 @@ class DetailViewController: UIViewController {
 
     var business: Business?
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet var floatRatingView: FloatRatingView!
 
@@ -22,12 +23,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var address: UILabel!
     
-    
+    @IBOutlet weak var hours: UILabel!
     @IBOutlet weak var phone: UILabel!
-    @IBAction func dismiss(_ sender: Any) {
-        
-        self.dismiss(animated: true)
-    }
+    @IBOutlet weak var categories: UILabel!
     
     func configureView() {
         
@@ -38,7 +36,38 @@ class DetailViewController: UIViewController {
         floatRatingView.type = .halfRatings
         floatRatingView.backgroundColor = UIColor.clear
         
+        
         if let b = business {
+            
+            ApiManager().business(id: b.objectId!) {
+                self.activityIndicator.stopAnimating()
+                
+                // Add hours
+                if let hours = b.hours?.allObjects as? [Hour] {
+                    var hrs = ""
+                    for hour in hours {
+                        for open in  hour.open?.allObjects as? [Open]  ?? [] {
+                            if hrs.isEmpty { hrs = "Hours of operation\n" }
+                            hrs += "\t\(open.day ) \(open.start ?? "" ) -> \(open.end ?? "" ) \n"
+                        }
+                    }
+                    self.hours.text = hrs
+                }
+                
+                // Add Categories
+                if let categories = b.categoires?.allObjects as? [Category] {
+                    var cgs = ""
+                    var sep = ""
+                    for category in categories {
+                        if cgs.isEmpty { cgs = "Categories\n" }
+                        cgs += " \(sep) \(category.title ??  "" )"
+                        sep = "-"
+                    }
+                    self.categories.text = cgs
+                }
+                
+            }
+            
             self.floatRatingView.rating = b.rating
             self.name.text              = b.name
             self.address.text           = b.location?.display_address
@@ -109,10 +138,13 @@ class DetailViewController: UIViewController {
                 }
             }
         }.resume()
-        
     }
     
-
+    @IBAction func dismiss(_ sender: Any) {
+        
+        self.dismiss(animated: true)
+    }
+    
 
 
 }

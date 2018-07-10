@@ -5,13 +5,20 @@
         <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" attributeType="String" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="categoires" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" syncable="YES"/>
+        <relationship name="categoires" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="business" inverseEntity="Category" syncable="YES"/>
+        <relationship name="hours" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hour" inverseName="business" inverseEntity="Hour" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="business" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Business" inverseName="categoires" inverseEntity="Business" syncable="YES"/>
+    </entity>
+    <entity name="Hour" representedClassName="Hour" syncable="YES" codeGenerationType="class">
+        <attribute name="hours_type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="business" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Business" inverseName="hours" inverseEntity="Business" syncable="YES"/>
+        <relationship name="open" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Open" inverseName="hour" inverseEntity="Open" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,9 +26,18 @@
         <attribute name="display_address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip_code" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Open" representedClassName="Open" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="end" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="is_overnight" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hour" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Hour" inverseName="open" inverseEntity="Hour" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Business" positionX="261" positionY="207" width="128" height="165"/>
-        <element name="Category" positionX="270" positionY="216" width="128" height="30"/>
-        <element name="Location" positionX="288" positionY="297" width="128" height="105"/>
+        <element name="Business" positionX="-36" positionY="144" width="128" height="178"/>
+        <element name="Category" positionX="243" positionY="144" width="128" height="73"/>
+        <element name="Hour" positionX="34" positionY="360" width="128" height="88"/>
+        <element name="Location" positionX="288" positionY="360" width="128" height="103"/>
+        <element name="Open" positionX="-72" positionY="489" width="128" height="118"/>
     </elements>
 </model>

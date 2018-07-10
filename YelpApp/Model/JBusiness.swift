@@ -13,15 +13,27 @@ struct JBusinessRes: Codable {
     let businesses: [JBusiness]
 }
 
-struct JBusiness : Codable {
+struct JBusiness: Codable {
     let id: String
     let name: String
     let image_url: String
     let location: JLocation
     let rating: Double
     let display_phone: String
+    let hours: [JHour]?
+    let categories: [JCategory]?
+}
 
-    //let categories: [JCategory]
+struct JHour: Codable {
+    let hours_type: String
+    let open: [JOpen]
+}
+
+struct JOpen: Codable {
+    let day: Int
+    let start: String
+    let end: String
+    //let is_overnight: Bool
 }
 
 struct JLocation: Codable {
@@ -29,10 +41,9 @@ struct JLocation: Codable {
     let city: String
     let zip_code: String
     let display_address: [String]
-    
-    
-    
 }
+
+
 
 extension Location {
     
@@ -41,6 +52,8 @@ extension Location {
         self.city               = jLocation.city
         self.zip_code           = jLocation.zip_code
         self.display_address    = jLocation.display_address.joined(separator: "\n")
+        
+        
     }
 }
 
@@ -58,6 +71,7 @@ extension Business {
         self.image_url             = jBusiness.image_url
         self.rating                = jBusiness.rating
         self.display_phone         = jBusiness.display_phone
+
         //print("jBusiness \(jBusiness.location.display_address )" )
     }
     

@@ -257,7 +257,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e44-2x-Mk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1780" y="97"/>
+            <point key="canvasLocation" x="1551" y="-84"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="0n1-Rp-Myb">
@@ -322,19 +322,54 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Up4-VH-3Lb" customClass="FloatRatingView" customModule="FloatRatingView">
-                                        <rect key="frame" x="0.0" y="215" width="375" height="432"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJQ-fL-MOg">
+                                        <rect key="frame" x="0.0" y="215" width="375" height="50"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2US-Ue-5x5" customClass="FloatRatingView" customModule="FloatRatingView">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="Y0z-FU-nwR"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="star-3"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="fullImage" value="star-2"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="minRating">
+                                                        <integer key="value" value="0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxRating">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="editable" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="fullImage" value="star-2"/>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="minRating">
-                                                <integer key="value" value="0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="maxRating">
-                                                <integer key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="star-3"/>
-                                        </userDefinedRuntimeAttributes>
+                                        <constraints>
+                                            <constraint firstItem="2US-Ue-5x5" firstAttribute="top" secondItem="AJQ-fL-MOg" secondAttribute="top" id="FXa-g4-FE4"/>
+                                            <constraint firstAttribute="height" constant="50" id="YV6-yf-fxU"/>
+                                            <constraint firstAttribute="bottom" secondItem="2US-Ue-5x5" secondAttribute="bottom" id="cBU-gM-PuO"/>
+                                            <constraint firstItem="2US-Ue-5x5" firstAttribute="leading" secondItem="AJQ-fL-MOg" secondAttribute="leading" id="x3A-Fa-2K1"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hours" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxg-aX-thR">
+                                        <rect key="frame" x="0.0" y="265" width="375" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsl-FB-U07">
+                                        <rect key="frame" x="0.0" y="285.5" width="375" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mz5-Yt-hSl">
+                                        <rect key="frame" x="0.0" y="306" width="375" height="20"/>
+                                    </activityIndicatorView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHZ-BO-KeI">
+                                        <rect key="frame" x="0.0" y="326" width="375" height="321"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -350,8 +385,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="CQb-tZ-jFM"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="mz5-Yt-hSl" id="fmN-ab-eT6"/>
                         <outlet property="address" destination="fe9-R8-nDP" id="QNN-L0-0WX"/>
-                        <outlet property="floatRatingView" destination="Up4-VH-3Lb" id="PvP-ST-Pce"/>
+                        <outlet property="categories" destination="hsl-FB-U07" id="gXG-Q6-p8P"/>
+                        <outlet property="floatRatingView" destination="2US-Ue-5x5" id="qzZ-VF-R5u"/>
+                        <outlet property="hours" destination="cxg-aX-thR" id="tVc-UK-1nY"/>
                         <outlet property="name" destination="2Mx-1X-Uat" id="Dhz-Hm-3PI"/>
                         <outlet property="phone" destination="SkJ-Qk-QRH" id="WGe-T2-xQt"/>
                         <outlet property="photo" destination="nBY-Fs-y5Z" id="oql-Ve-BF0"/>
