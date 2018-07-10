@@ -22,13 +22,11 @@ struct JBusiness : Codable {
 
 extension Business {
     
-    func  populate(with jBusinessc: JBusiness) -> Business {
+    func  populate(with jBusinessc: JBusiness) {
         
         self.name                  = jBusinessc.name
         self.image_url             = jBusinessc.image_url
-        //self.display_address       = jBusinessc.display_address
-        
-        return self
+        self.display_address       = jBusinessc.display_address
     }
     
 }

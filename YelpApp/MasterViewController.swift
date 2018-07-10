@@ -28,11 +28,10 @@ class MasterViewController: UITableViewController,
     
     func gotLocation(coordinate: (lat: Double, lon: Double)) {
 
-        ApiManager().search( coordinate: (coordinate.lat, coordinate.lon), completion:{
-            
-        })
+//        ApiManager().search( coordinate: (coordinate.lat, coordinate.lon), completion:{
+//
+//        })
     }
-    
     
 
     var detailViewController: DetailViewController? = nil
@@ -49,27 +48,6 @@ class MasterViewController: UITableViewController,
         self.locationManager = LocationManager(user: self)
         
         
-//        if (CLLocationManager.locationServicesEnabled()) {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//            locationManager.requestWhenInUseAuthorization()
-//            locationManager.startUpdatingLocation()
-//
-//
-//        } else {
-//            let msg = "Location services are not enabled"
-//
-//            let alert = UIAlertController(title: "Did you allow Location service?", message: msg , preferredStyle: .alert)
-//            self.present(alert, animated: true)
-//
-//            print(msg);
-//        }
-//
-        
-
-    
-    
-
         
         // Do any additional setup after loading the view, typically from a nib.
 
@@ -93,6 +71,7 @@ class MasterViewController: UITableViewController,
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+    
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,7 +114,6 @@ class MasterViewController: UITableViewController,
             if let advanceSeachVC = segue.destination as? AdvanceSearchVC {
                 advanceSeachVC.popoverPresentationController!.delegate = self
             }
-
         }
     }
 

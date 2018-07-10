@@ -18,13 +18,4 @@ class Session {
                                SearchCriteria(name: .postalCode)]
     
     var coordinate: (lat: Double, lon: Double)?
-    
-//    mutating func setCoordinate(c : (lat: Double, lon: Double)) {
-//        self.coordinate!.lat = c.lat
-//        self.coordinate!.lon = c.lon
-//        
-//    }
-    
-
-
 }

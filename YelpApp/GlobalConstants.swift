@@ -16,6 +16,10 @@ struct GlobalConstants {    //
     static let kDBStore             = "Business"
     static let kBaseDBStore         = "BusinessDB"
     static let kBaseDBStoreBundle   = (name:"BusinessDB", date:"20180709")
+    
+    
+    static let kBusinessCell        = "BusinessCell"
+    
 
 
 }

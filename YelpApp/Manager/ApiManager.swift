@@ -28,10 +28,17 @@ open class ApiManager {
 
     let headers = [ "Authorization": "Bearer \(GlobalConstants.clientKey)" ]
 
-    open func search(coordinate: (lat: Double, lon: Double), completion : @escaping ()-> Void) {
+    //open func search(coordinate: (lat: Double, lon: Double), completion : @escaping ()-> Void) {
+    open func search( completion : @escaping ()-> Void) {
+
         
         let url = "\(GlobalConstants.api)\(Service.business.rawValue)"
         print("request \( url) ")
+        
+        guard let coordinate = Session.shared.coordinate else {
+            completion()
+            return
+        }
         
         let parameters: Parameters = [
             "latitude": "\(coordinate.lat)",
@@ -58,10 +65,12 @@ open class ApiManager {
                             
                             if let business: Business = NSManagedObject.managedObjectUpsert(jBusiness.id) {
                                 
-                                _ = business.populate(with: jBusiness)
+                                business.populate(with: jBusiness)
                             }
                             
                         }
+                        
+                        DBUtils.sharedInstance.saveContext()
                         
                         //completion(publishDate)
                     } catch {
