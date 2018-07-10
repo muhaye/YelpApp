@@ -94,12 +94,29 @@ class SResultsTableController: UIViewController,
 //    }
 //
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.selectedBusiness        = self.Businesss(searchString: searchedText!)[indexPath.row]
-//        let titreListVC             = self.presentingViewController as! TitreListVC
+//        self.selectedBusiness    = self.businesss(searchString: searchedText!)[indexPath.row]
+//        let detailVC             = self.presentingViewController as! TitreListVC
 //        titreListVC.selectedBusiness = self.selectedBusiness
 //        titreListVC.performSegue(withIdentifier: ShowSegue.Business.rawValue, sender: self)
 //    }
-//    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "presentDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow,
+                let detailVC = segue.destination as? DetailViewController {
+                
+                detailVC.business = self.businesss(searchString: searchedText!)[indexPath.row]
+                
+                //            let object = fetchedResultsController.object(at: indexPath)
+                //                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                //                controller.detailItem = object
+//                detailVC.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+//                detailVC.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
+    }
+
+    
     func businesss(searchString: String) -> [Business] {
         let fetchRequest: NSFetchRequest<Business>  = Business.fetchRequest()
         let arrayOfSearchs                          = searchString.components(separatedBy: " ")

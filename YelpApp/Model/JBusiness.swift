@@ -18,6 +18,9 @@ struct JBusiness : Codable {
     let name: String
     let image_url: String
     let location: JLocation
+    let rating: Double
+    let display_phone: String
+
     //let categories: [JCategory]
 }
 
@@ -53,7 +56,8 @@ extension Business {
         self.objectId              = jBusiness.id
         self.name                  = jBusiness.name
         self.image_url             = jBusiness.image_url
-        
+        self.rating                = jBusiness.rating
+        self.display_phone         = jBusiness.display_phone
         //print("jBusiness \(jBusiness.location.display_address )" )
     }
     
