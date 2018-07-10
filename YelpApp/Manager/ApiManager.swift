@@ -66,6 +66,9 @@ open class ApiManager {
                             if let business: Business = NSManagedObject.managedObjectUpsert(jBusiness.id) {
                                 
                                 business.populate(with: jBusiness)
+                                
+                                business.location = NSManagedObject.new()
+                                business.location?.populate(with: jBusiness.location)
                             }
                             
                         }

@@ -55,7 +55,7 @@ class LocationManager:  NSObject, CLLocationManagerDelegate {
             Session.shared.coordinate = (coo.latitude, lon: coo.longitude)
             // user.gotLocation(coordinate: )
             
-            ApiManager().search(completion: {})
+            //ApiManager().search(completion: {})
 
         }
         

@@ -6,31 +6,53 @@
 import CoreData
 import UIKit
 
-class SResultsTableController: UITableViewController {
-
+class SResultsTableController: UIViewController,
+                    UITableViewDataSource,
+                    UITableViewDelegate {
+    
+    @IBOutlet weak var result: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    
     var searchedText: String?{
         didSet{
-            self.tableView.reloadData()
+            func update() {
+                self.result.text = "\(total) results"
+                self.tableView.reloadData()
+            }
+            
+            update()
+            
+            ApiManager().search {
+                self.tableView.reloadData()
+                update()
+            }
+            
         }
     }
     
     var selectedBusiness: Business?
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section.
+    
+    var total: Int {
+        
         if let sSearch = searchedText, sSearch.isEmpty == false {
             return self.businesss(searchString: sSearch).count
-        } else { return 0 }
+        } else {
+            return 0
+        }    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return total
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let titleCell               = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kBusinessCell)
         let business                = self.businesss(searchString: searchedText!)[indexPath.row]
         let titleTextPlain          = business.name! as NSString
-        let texte                   = "\(business.display_address)" as NSString
+        let texte                   = "\(business.detailOnliner )" as NSString
         
-        let texteAttributed         = NSMutableAttributedString(string: business.name! , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
+        let texteAttributed         = NSMutableAttributedString(string: business.detailOnliner , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
         let title                   = NSMutableAttributedString(string: titleTextPlain as String , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
         var arrayOfSearchs = self.searchedText!.components(separatedBy: " ")
         arrayOfSearchs = arrayOfSearchs.filter({ $0.count > 0 })
@@ -66,11 +88,11 @@ class SResultsTableController: UITableViewController {
         titleCell!.detailTextLabel!.font = UIFont.systemFont(ofSize: 14)
         return titleCell!
     }
-//
+
 //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        return 75.0
 //    }
-//    
+//
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        self.selectedBusiness        = self.Businesss(searchString: searchedText!)[indexPath.row]
 //        let titreListVC             = self.presentingViewController as! TitreListVC

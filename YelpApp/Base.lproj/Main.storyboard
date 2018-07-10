@@ -214,51 +214,75 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
         <!--Results Table Controller-->
-        <scene sceneID="Heu-p0-sYP">
+        <scene sceneID="dYy-NY-Drz">
             <objects>
-                <tableViewController storyboardIdentifier="SResultsTableController" id="TWW-Cd-8dC" customClass="SResultsTableController" customModule="YelpApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ytJ-pf-Bjr">
+                <viewController storyboardIdentifier="SResultsTableController" id="f5m-rW-2dD" customClass="SResultsTableController" customModule="YelpApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MBB-jf-50l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BusinessCell" textLabel="8eW-yX-1oV" detailTextLabel="FyD-wz-Ecd" style="IBUITableViewCellStyleSubtitle" id="zGb-eH-wF2" customClass="TitleTableViewCell" customModule="YelpApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="22" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zGb-eH-wF2" id="iOY-5Q-WLb">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Article" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8eW-yX-1oV">
-                                            <rect key="frame" x="16" y="5" width="49" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FyD-wz-Ecd">
-                                            <rect key="frame" x="16" y="23" width="74" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.90196078430000004" green="0.90588235289999997" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.90196078430000004" green="0.90588235289999997" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="TWW-Cd-8dC" id="Hns-r9-Rt9"/>
-                            <outlet property="delegate" destination="TWW-Cd-8dC" id="s7P-TF-Cc4"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="FVh-Xh-eMH"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rai-yN-yr7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdX-do-ZeV">
+                                <rect key="frame" x="16" y="69" width="55" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gBy-TX-7cv">
+                                <rect key="frame" x="0.0" y="93" width="375" height="534"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BusinessCell" textLabel="Xsw-fX-95G" detailTextLabel="Ibk-11-bse" style="IBUITableViewCellStyleSubtitle" id="ZZi-H7-PdU" customClass="TitleTableViewCell" customModule="YelpApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZZi-H7-PdU" id="tKz-lW-kru">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Article" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xsw-fX-95G">
+                                                    <rect key="frame" x="15" y="5" width="49" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ibk-11-bse">
+                                                    <rect key="frame" x="15" y="23" width="74" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.90196078430000004" green="0.90588235289999997" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.90196078430000004" green="0.90588235289999997" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="f5m-rW-2dD" id="4zs-hV-fB7"/>
+                                    <outlet property="delegate" destination="f5m-rW-2dD" id="USz-ci-mxd"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vdX-do-ZeV" firstAttribute="top" secondItem="FE7-iD-2IA" secondAttribute="top" constant="49" id="5Dy-Nd-T0q"/>
+                            <constraint firstItem="FE7-iD-2IA" firstAttribute="bottom" secondItem="gBy-TX-7cv" secondAttribute="bottom" constant="40" id="61N-Zm-mzc"/>
+                            <constraint firstItem="gBy-TX-7cv" firstAttribute="leading" secondItem="FE7-iD-2IA" secondAttribute="leading" id="CFB-6D-5Yh"/>
+                            <constraint firstItem="gBy-TX-7cv" firstAttribute="top" secondItem="vdX-do-ZeV" secondAttribute="bottom" constant="8" id="HEF-9e-Lh9"/>
+                            <constraint firstItem="gBy-TX-7cv" firstAttribute="trailing" secondItem="FE7-iD-2IA" secondAttribute="trailing" id="lud-PH-nbj"/>
+                            <constraint firstItem="vdX-do-ZeV" firstAttribute="leading" secondItem="FE7-iD-2IA" secondAttribute="leading" constant="16" id="oyr-Vs-Zue"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FE7-iD-2IA"/>
+                    </view>
+                    <connections>
+                        <outlet property="result" destination="vdX-do-ZeV" id="n1r-61-ZaW"/>
+                        <outlet property="tableView" destination="gBy-TX-7cv" id="Wg2-4o-DZJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e44-2x-Mk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-39" y="-1418"/>
+            <point key="canvasLocation" x="684" y="-1418.1409295352325"/>
         </scene>
     </scenes>
     <resources>
@@ -266,6 +290,6 @@
         <image name="unchecked" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="Tll-UG-LXB"/>
     </inferredMetricsTieBreakers>
 </document>

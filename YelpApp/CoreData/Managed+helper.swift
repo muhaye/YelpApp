@@ -10,11 +10,11 @@ import CoreData
 
 extension NSManagedObject {
     
+    static var managedObjectContext: NSManagedObjectContext {
+        return DBUtils.sharedInstance.managedObjectContext
+    }
+
     class func managedObjectUpsert<T: NSManagedObject>(_ id: String) -> T? {
-        
-        let managedObjectContext: NSManagedObjectContext = {
-            return DBUtils.sharedInstance.managedObjectContext
-        }()
         
         if let entityName = T.entity().name {
             
@@ -38,4 +38,14 @@ extension NSManagedObject {
 
         return nil
     }
+    
+    class func new<T: NSManagedObject>() -> T? {
+        
+        if let entityName = T.entity().name {
+            let managedObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: managedObjectContext)
+            return managedObject as? T
+        }
+        return nil
+    }
+    
 }
