@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (4.7.2)
+  - FloatRatingView (3.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - FloatRatingView
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - FloatRatingView
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  FloatRatingView: 0f7b45733124516ac6b8f535e5b5f4fa2e122180
+
+PODFILE CHECKSUM: cd41799520d4b6c8a253913cf854c337f45a516b
+
+COCOAPODS: 1.5.0
