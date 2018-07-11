@@ -86,6 +86,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="CrX-NV-yBX">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="cV0-Gf-2qJ">
+                                <rect key="frame" x="16" y="7" width="135" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Distance"/>
+                                    <segment title="Ratings"/>
+                                </segments>
+                                <connections>
+                                    <action selector="updateSorting:" destination="7bK-jq-Zjz" eventType="valueChanged" id="oPI-rH-67w"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="LqH-ib-uuO">
                             <connections>
                                 <segue destination="1V9-9H-Fn0" kind="popoverPresentation" identifier="showAdvanceSearch" popoverAnchorBarButtonItem="LqH-ib-uuO" id="EcM-aY-7tU">

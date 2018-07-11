@@ -179,6 +179,12 @@ class MasterViewController: UITableViewController,
         self.tableView.reloadData()
     }
     
+    @IBAction func updateSorting(_ sortor: UISegmentedControl) {
+        
+        Session.shared.sortCriteria = sortor.selectedSegmentIndex == 0 ? .distance : .rating
+
+        
+    }
 }
 
 
