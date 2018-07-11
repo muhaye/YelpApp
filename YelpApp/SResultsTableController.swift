@@ -16,77 +16,101 @@ class SResultsTableController: UIViewController,
     var searchedText: String?{
         didSet{
             func update() {
-                self.result.text = "\(total) results"
+                self.result.text = "\(totalBusiness) results"
                 self.tableView.reloadData()
             }
             
             update()
             
-            ApiManager().search {
-                self.tableView.reloadData()
-                update()
+            if let searchedText = searchedText, searchedText.isEmpty == false {
+                ApiManager().autocomplete(text: searchedText) { (terms: [JTerm]) in
+                    self.terms = terms
+                    
+                    update()
+                    
+                    if let term = terms.first {
+                        ApiManager().search(term: term.text) {
+                            self.tableView.reloadData()
+                            update()
+                        }
+                    }
+                }
             }
-            
         }
     }
     
     var selectedBusiness: Business?
+    var terms: [JTerm] = []
     
-    
-    var total: Int {
+    var totalBusiness: Int {
         
         if let sSearch = searchedText, sSearch.isEmpty == false {
             return self.businesss(searchString: sSearch).count
         } else {
             return 0
-        }    }
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return total
+        return section == 0 ? self.terms.count : totalBusiness
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let autocompliteCell         = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kAutocompliteCell),
+            indexPath.section == 0 {
+            autocompliteCell.textLabel?.text = self.terms[indexPath.row].text
+            
+            return autocompliteCell
 
-        let titleCell               = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kBusinessCell)
-        let business                = self.businesss(searchString: searchedText!)[indexPath.row]
-        let titleTextPlain          = business.name! as NSString
-        let texte                   = "\(business.detailOnliner )" as NSString
-        
-        let texteAttributed         = NSMutableAttributedString(string: business.detailOnliner , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
-        let title                   = NSMutableAttributedString(string: titleTextPlain as String , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
-        var arrayOfSearchs = self.searchedText!.components(separatedBy: " ")
-        arrayOfSearchs = arrayOfSearchs.filter({ $0.count > 0 })
-        var textAttributedSniped : NSMutableAttributedString?
-        let snipedCharMargin: Int = 20
-        for cSearch in arrayOfSearchs {
-            let wordRange: NSRange = texte.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive)
-            if textAttributedSniped == nil  && wordRange.location != NSNotFound {
-                var textSnipedRange: NSRange
-                if snipedCharMargin > wordRange.location {
-                    textSnipedRange = NSMakeRange(0, snipedCharMargin * 2)
+    } else if let businessCell         = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kBusinessCell),
+             indexPath.section == 1  {
+            let business                = self.businesss(searchString: searchedText!)[indexPath.row]
+            let titleTextPlain          = business.name! as NSString
+            let texte                   = "\(business.detailOnliner )" as NSString
+            
+            let texteAttributed         = NSMutableAttributedString(string: business.detailOnliner , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
+            let title                   = NSMutableAttributedString(string: titleTextPlain as String , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15), NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
+            var arrayOfSearchs = self.searchedText!.components(separatedBy: " ")
+            arrayOfSearchs = arrayOfSearchs.filter({ $0.count > 0 })
+            var textAttributedSniped : NSMutableAttributedString?
+            let snipedCharMargin: Int = 20
+            for cSearch in arrayOfSearchs {
+                let wordRange: NSRange = texte.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive)
+                if textAttributedSniped == nil  && wordRange.location != NSNotFound {
+                    var textSnipedRange: NSRange
+                    if snipedCharMargin > wordRange.location {
+                        textSnipedRange = NSMakeRange(0, snipedCharMargin * 2)
+                    }
+                    else {
+                        textSnipedRange = NSMakeRange(wordRange.location - snipedCharMargin, snipedCharMargin * 2)
+                    }
+                    if textSnipedRange.location + textSnipedRange.length > texte.length - 1 {
+                        textSnipedRange = NSMakeRange(texte.length - snipedCharMargin * 2, snipedCharMargin * 2)
+                    }
+                    var textSniped: NSString = texte.substring(with: textSnipedRange) as NSString
+                    let firstSpaceRange: NSRange = textSniped.range(of: " ")
+                    textSniped = textSniped.substring(with: NSMakeRange(firstSpaceRange.location, textSniped.length - firstSpaceRange.location)) as NSString
+                    textSniped = "...\(textSniped)" as NSString
+                    textAttributedSniped = NSMutableAttributedString(string: textSniped as String, attributes: [NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
+                    textAttributedSniped!.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: textSniped.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive))
                 }
-                else {
-                    textSnipedRange = NSMakeRange(wordRange.location - snipedCharMargin, snipedCharMargin * 2)
-                }
-                if textSnipedRange.location + textSnipedRange.length > texte.length - 1 {
-                    textSnipedRange = NSMakeRange(texte.length - snipedCharMargin * 2, snipedCharMargin * 2)
-                }
-                var textSniped: NSString = texte.substring(with: textSnipedRange) as NSString
-                let firstSpaceRange: NSRange = textSniped.range(of: " ")
-                textSniped = textSniped.substring(with: NSMakeRange(firstSpaceRange.location, textSniped.length - firstSpaceRange.location)) as NSString
-                textSniped = "...\(textSniped)" as NSString
-                textAttributedSniped = NSMutableAttributedString(string: textSniped as String, attributes: [NSCharacterEncodingDocumentAttribute: String.Encoding.utf8])
-                textAttributedSniped!.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: textSniped.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive))
+                title.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: titleTextPlain.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive))
             }
-            title.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: titleTextPlain.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive))
+            businessCell.textLabel!.attributedText = title
+            businessCell.detailTextLabel!.attributedText = textAttributedSniped ?? texteAttributed
+            // businessCell!.backgroundColor = UIColor(red: 230 / 255.0, green: 231 / 255.0, blue: 232 / 255.0, alpha: 1.0)
+            businessCell.textLabel!.font = UIFont.boldSystemFont(ofSize: 15)
+            businessCell.detailTextLabel!.numberOfLines = 2
+            businessCell.detailTextLabel!.font = UIFont.systemFont(ofSize: 14)
+            return businessCell
+            
         }
-        titleCell!.textLabel!.attributedText = title
-        titleCell!.detailTextLabel!.attributedText = textAttributedSniped ?? texteAttributed
-        titleCell!.backgroundColor = UIColor(red: 230 / 255.0, green: 231 / 255.0, blue: 232 / 255.0, alpha: 1.0)
-        titleCell!.textLabel!.font = UIFont.boldSystemFont(ofSize: 15)
-        titleCell!.detailTextLabel!.numberOfLines = 2
-        titleCell!.detailTextLabel!.font = UIFont.systemFont(ofSize: 14)
-        return titleCell!
+        
+        return UITableViewCell()
     }
 
 //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -126,8 +150,8 @@ class SResultsTableController: UIViewController,
         }
         
         let predicates = arrayOfSearchs.filter({ $0.count > 0 }).map( {
-           // return NSPredicate(format: " (numero CONTAINS[cd] %@ OR texte CONTAINS[cd] %@)", $0.lowercased(), $0.lowercased())
-            return NSPredicate(format: "name CONTAINS[cd] %@", $0.lowercased() )
+
+            return NSPredicate(format: "name CONTAINS[cd] %@ OR categoires.title CONTAINS[cd] %@ ", $0.lowercased(),  $0.lowercased() )
 
         } )
         

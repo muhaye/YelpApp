@@ -43,7 +43,13 @@ struct JLocation: Codable {
     let display_address: [String]
 }
 
+struct JTermRes: Codable {
+    let terms: [JTerm]
+}
 
+struct JTerm: Codable {
+    let text: String
+}
 
 extension Location {
     
@@ -52,7 +58,6 @@ extension Location {
         self.city               = jLocation.city
         self.zip_code           = jLocation.zip_code
         self.display_address    = jLocation.display_address.joined(separator: "\n")
-        
         
     }
 }
