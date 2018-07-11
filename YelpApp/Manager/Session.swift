@@ -17,5 +17,7 @@ class Session {
                                SearchCriteria(name: .city),
                                SearchCriteria(name: .postalCode)]
     
+    var sortCriteria: SortCriteria = .distance
+    
     var coordinate: (lat: Double, lon: Double)?
 }

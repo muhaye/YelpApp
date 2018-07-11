@@ -88,6 +88,7 @@ class ApiManager {
         let parameters: Parameters = [
             "latitude": "\(coordinate.lat)",
             "longitude": "\(coordinate.lon)",
+            "sort_by": Session.shared.sortCriteria,
             "term": term
         ]
         

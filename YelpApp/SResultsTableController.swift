@@ -100,12 +100,10 @@ class SResultsTableController: UIViewController,
                 }
                 title.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: titleTextPlain.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive))
             }
-            businessCell.textLabel!.attributedText = title
-            businessCell.detailTextLabel!.attributedText = textAttributedSniped ?? texteAttributed
-            // businessCell!.backgroundColor = UIColor(red: 230 / 255.0, green: 231 / 255.0, blue: 232 / 255.0, alpha: 1.0)
-            businessCell.textLabel!.font = UIFont.boldSystemFont(ofSize: 15)
-            businessCell.detailTextLabel!.numberOfLines = 2
-            businessCell.detailTextLabel!.font = UIFont.systemFont(ofSize: 14)
+        
+            businessCell.textLabel?.attributedText = title
+            businessCell.detailTextLabel?.attributedText = textAttributedSniped ?? texteAttributed
+
             return businessCell
             
         }
@@ -139,7 +137,6 @@ class SResultsTableController: UIViewController,
             }
         }
     }
-
     
     func businesss(searchString: String) -> [Business] {
         let fetchRequest: NSFetchRequest<Business>  = Business.fetchRequest()
@@ -149,17 +146,40 @@ class SResultsTableController: UIViewController,
             return []
         }
         
-        let predicates = arrayOfSearchs.filter({ $0.count > 0 }).map( {
-
-            return NSPredicate(format: "name CONTAINS[cd] %@ OR categoires.title CONTAINS[cd] %@ ", $0.lowercased(),  $0.lowercased() )
-
-        } )
+        var predicates: [NSPredicate] = []
+        
+//        var namePredicates = arrayOfSearchs.filter({ $0.count > 0 }).map( {
+//            return NSPredicate(format: "name CONTAINS[cd] %@  ", $0.lowercased())
+//        } )
+        
+        if let currentTerm = self.terms.first?.text {
+            let termPredicate = NSPredicate(format: "term.text =  %@ ", currentTerm)
+            predicates.append(termPredicate)
+            
+//            let termPresen = NSSortDescriptor(key: "term.text", ascending: true) { (t1, t2) -> ComparisonResult in
+//
+//                let t1 = t1 as? String ?? ""
+//                let t2 = t2 as? String ?? ""
+//
+//                let index = [t1, t2].index(of: currentTerm)
+//
+//                if t1 == t2 || index == nil {
+//                    return .orderedSame
+//                } else if index == 1 {
+//                    return .orderedAscending
+//                } else  {
+//                    return .orderedDescending
+//                }
+//            }
+//
+//            fetchRequest.sortDescriptors = [termPresen]
+        }
         
         fetchRequest.predicate          = NSCompoundPredicate(andPredicateWithSubpredicates:predicates)
+        
         let distanceSortDescriptor      = NSSortDescriptor(key: "distance", ascending: true)
         let ratingSortDescriptor        = NSSortDescriptor(key: "rating", ascending: false)
-
-        fetchRequest.sortDescriptors    = [distanceSortDescriptor, ratingSortDescriptor]
+        fetchRequest.sortDescriptors    = [Session.shared.sortCriteria == .distance ? distanceSortDescriptor : ratingSortDescriptor]
         
         do{
             return try self.mContext.fetch(fetchRequest)
