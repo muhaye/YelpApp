@@ -10,10 +10,6 @@ import Foundation
 import Alamofire
 import CoreData
 
-public protocol WSItem {
-    func json() -> [String:Any]
-    func service() -> Service
-}
 
 public enum Service : String {
     case business           = "/businesses/search"

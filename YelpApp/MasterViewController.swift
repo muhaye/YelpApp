@@ -17,6 +17,7 @@ class MasterViewController: UITableViewController,
     UISearchResultsUpdating,
     UISearchControllerDelegate,
     LocationUser {
+
     
     func notAuthorize() {
 
@@ -173,7 +174,10 @@ class MasterViewController: UITableViewController,
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchString: String = searchController.searchBar.text!
-        self.resultsTableController!.searchedText = searchString
+        self.resultsTableController?.searchedText = searchString
+        self.resultsTableController?.userDidSelectTerm = { (selectedTerm: String) in
+            self.searchController.searchBar.text = selectedTerm
+        }
         self.tableView.reloadData()
     }
     

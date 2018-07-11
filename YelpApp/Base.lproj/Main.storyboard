@@ -228,7 +228,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BusinessCell" textLabel="Xsw-fX-95G" detailTextLabel="Ibk-11-bse" style="IBUITableViewCellStyleSubtitle" id="ZZi-H7-PdU" customClass="TitleTableViewCell" customModule="YelpApp" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BusinessCell" textLabel="Xsw-fX-95G" detailTextLabel="Ibk-11-bse" style="IBUITableViewCellStyleSubtitle" id="ZZi-H7-PdU">
                                         <rect key="frame" x="0.0" y="58" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZZi-H7-PdU" id="tKz-lW-kru">

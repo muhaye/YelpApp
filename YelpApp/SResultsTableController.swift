@@ -17,6 +17,8 @@ UITableViewDelegate {
         return Session.shared.searchCriteria.filter({  $0.checked })
     }
     
+    var userDidSelectTerm: ((_ selectedTerm: String) -> ())? = nil
+    
     var searchedText: String?{
         didSet{
             func update() {
@@ -119,22 +121,17 @@ UITableViewDelegate {
             businessCell.detailTextLabel?.attributedText = textAttributedSniped ?? texteAttributed
             
             return businessCell
-            
         }
         
         return UITableViewCell()
     }
     
-    //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return 75.0
-    //    }
-    //
-    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        self.selectedBusiness    = self.businesss(searchString: searchedText!)[indexPath.row]
-    //        let detailVC             = self.presentingViewController as! TitreListVC
-    //        titreListVC.selectedBusiness = self.selectedBusiness
-    //        titreListVC.performSegue(withIdentifier: ShowSegue.Business.rawValue, sender: self)
-    //    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let selectedTerm = self.terms[indexPath.row].text
+            userDidSelectTerm?(selectedTerm)
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "presentDetail" {
@@ -159,7 +156,6 @@ UITableViewDelegate {
         if arrayOfSearchs.count == 0 {
             return []
         }
-        
         
         var predicates: [NSPredicate] = []
         
