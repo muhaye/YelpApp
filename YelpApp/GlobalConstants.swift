@@ -14,12 +14,8 @@ struct GlobalConstants {    //
     static let api                  =  "https://api.yelp.com/v3"
     
     static let kDBStore             = "Business"
-    //static let kBaseDBStore         = "BusinessDB"
-    //static let kBaseDBStoreBundle   = (name:"BusinessDB", date:"20180709")
-    
+
     static let kAutocompliteCell    = "AutocompleteCell"
     static let kBusinessCell        = "BusinessCell"
-    
-
 
 }
