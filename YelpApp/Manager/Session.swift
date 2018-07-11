@@ -8,14 +8,16 @@
 
 import Foundation
 
+
+
 class Session {
     static let shared = Session()
     private init() {}
     
-    var searchCriteria = [SearchCriteria(name: .name, checked: true),
-                               SearchCriteria(name: .address),
+    var searchCriteria = [SearchCriteria(name: .name),
+                               SearchCriteria(name: .address1),
                                SearchCriteria(name: .city),
-                               SearchCriteria(name: .postalCode)]
+                               SearchCriteria(name: .zip_code)]
     
     var sortCriteria: SortCriteria = .distance
     

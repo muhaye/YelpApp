@@ -56,7 +56,7 @@ extension Location {
     func populate(with jLocation: JLocation) {
         self.address1           = jLocation.address1
         self.city               = jLocation.city
-        self.zip_code           = jLocation.zip_code
+        self.zip_code           = jLocation.zip_code.trimmingCharacters(in: .whitespaces)
         self.display_address    = jLocation.display_address.joined(separator: "\n")
         
     }

@@ -15,20 +15,22 @@ public protocol WSItem {
     func service() -> Service
 }
 
-
 public enum Service : String {
     case business           = "/businesses/search"
     case businessDetail     = "/businesses/{id}" // /{id}
     case autocomplete       = "/autocomplete"
-
+    case businessMatches    = "/matches"
 }
 
 class ApiManager {
     
     let headers = [ "Authorization": "Bearer \(GlobalConstants.clientKey)" ]
     
+    var searchCriteriaChecked: [SearchCriteria] {
+        return Session.shared.searchCriteria.filter({  $0.checked })
+    }
+    
     init() {}
-
     
     func autocomplete(text: String, completion : @escaping (_ terms: [JTerm])-> Void) {
         
@@ -75,7 +77,9 @@ class ApiManager {
         }
     }
     
-    func search(term: String, completion : @escaping ()-> Void) {
+    func search(term: String = "", search: String = "" , completion : @escaping ()-> Void) {
+        
+        let service: Service = searchCriteriaChecked.count > 0 ? .businessMatches : .business
         
         let url = "\(GlobalConstants.api)\(Service.business.rawValue)"
         print("request \( url) ")
@@ -85,12 +89,21 @@ class ApiManager {
             return
         }
         
-        let parameters: Parameters = [
-            "latitude": "\(coordinate.lat)",
-            "longitude": "\(coordinate.lon)",
-            "sort_by": Session.shared.sortCriteria,
-            "term": term
-        ]
+        var parameters: Parameters =  [ "latitude": "\(coordinate.lat)",
+        "longitude": "\(coordinate.lon)"]
+        
+        
+        if service == .business {
+            parameters [ "sort_by"] = Session.shared.sortCriteria
+            parameters ["term"]  =  term
+            
+        } else { // . businessMatches
+            
+            for searchCriteria in searchCriteriaChecked {
+                parameters[ searchCriteria.name.rawValue ] = search
+            }
+        }
+        
         
         Alamofire.request(url,
                           method: .get,
@@ -118,7 +131,9 @@ class ApiManager {
                                 business.location?.populate(with: jBusiness.location)
                                 
                                 // Associated Term
-                                if let aTerm: Term = NSManagedObject.managedObjectUpsert(term, uKey: "text"){
+                                if let aTerm: Term = NSManagedObject.managedObjectUpsert(term, uKey: "text"),
+                                    self.searchCriteriaChecked.count > 0,
+                                    term.isEmpty == false {
                                     business.term = aTerm
                                 }
                                 

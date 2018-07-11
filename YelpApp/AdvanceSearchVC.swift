@@ -23,7 +23,7 @@ class AdvanceSearchVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let advanceSearchCellell = tableView.dequeueReusableCell(withIdentifier: "AdvanceSearchCell" ) as? AdvanceSearchCell {
-            advanceSearchCellell.textLabel?.text = searchCriteria[ indexPath.row].name.rawValue
+            advanceSearchCellell.textLabel?.text = searchCriteria[ indexPath.row].name.humanReadable
             advanceSearchCellell.check.isHighlighted = searchCriteria[ indexPath.row].checked
             
             return advanceSearchCellell

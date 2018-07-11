@@ -7,11 +7,15 @@ import CoreData
 import UIKit
 
 class SResultsTableController: UIViewController,
-                    UITableViewDataSource,
-                    UITableViewDelegate {
+    UITableViewDataSource,
+UITableViewDelegate {
     
     @IBOutlet weak var result: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
+    var searchCriteriaChecked: [SearchCriteria] {
+        return Session.shared.searchCriteria.filter({  $0.checked })
+    }
     
     var searchedText: String?{
         didSet{
@@ -23,15 +27,24 @@ class SResultsTableController: UIViewController,
             update()
             
             if let searchedText = searchedText, searchedText.isEmpty == false {
+                
+                
                 ApiManager().autocomplete(text: searchedText) { (terms: [JTerm]) in
                     self.terms = terms
                     
                     update()
                     
-                    if let term = terms.first {
-                        ApiManager().search(term: term.text) {
-                            self.tableView.reloadData()
+                    if self.searchCriteriaChecked.count > 0 {
+                        
+                        ApiManager().search(search: searchedText ) {
                             update()
+                        }
+                        
+                    } else {
+                        if let term = terms.first {
+                            ApiManager().search(term: term.text) {
+                                update()
+                            }
                         }
                     }
                 }
@@ -54,20 +67,20 @@ class SResultsTableController: UIViewController,
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? self.terms.count : totalBusiness
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let autocompliteCell         = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kAutocompliteCell),
             indexPath.section == 0 {
             autocompliteCell.textLabel?.text = self.terms[indexPath.row].text
             
             return autocompliteCell
-
-    } else if let businessCell         = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kBusinessCell),
-             indexPath.section == 1  {
+            
+        } else if let businessCell         = tableView.dequeueReusableCell(withIdentifier: GlobalConstants.kBusinessCell),
+            indexPath.section == 1  {
             let business                = self.businesss(searchString: searchedText!)[indexPath.row]
             let titleTextPlain          = business.name! as NSString
             let texte                   = "\(business.detailOnliner )" as NSString
@@ -78,6 +91,7 @@ class SResultsTableController: UIViewController,
             arrayOfSearchs = arrayOfSearchs.filter({ $0.count > 0 })
             var textAttributedSniped : NSMutableAttributedString?
             let snipedCharMargin: Int = 20
+            
             for cSearch in arrayOfSearchs {
                 let wordRange: NSRange = texte.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive)
                 if textAttributedSniped == nil  && wordRange.location != NSNotFound {
@@ -100,27 +114,27 @@ class SResultsTableController: UIViewController,
                 }
                 title.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: titleTextPlain.range(of: cSearch.lowercased(), options: NSString.CompareOptions.diacriticInsensitive))
             }
-        
+            
             businessCell.textLabel?.attributedText = title
             businessCell.detailTextLabel?.attributedText = textAttributedSniped ?? texteAttributed
-
+            
             return businessCell
             
         }
         
         return UITableViewCell()
     }
-
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 75.0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.selectedBusiness    = self.businesss(searchString: searchedText!)[indexPath.row]
-//        let detailVC             = self.presentingViewController as! TitreListVC
-//        titreListVC.selectedBusiness = self.selectedBusiness
-//        titreListVC.performSegue(withIdentifier: ShowSegue.Business.rawValue, sender: self)
-//    }
+    
+    //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return 75.0
+    //    }
+    //
+    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        self.selectedBusiness    = self.businesss(searchString: searchedText!)[indexPath.row]
+    //        let detailVC             = self.presentingViewController as! TitreListVC
+    //        titreListVC.selectedBusiness = self.selectedBusiness
+    //        titreListVC.performSegue(withIdentifier: ShowSegue.Business.rawValue, sender: self)
+    //    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "presentDetail" {
@@ -132,8 +146,8 @@ class SResultsTableController: UIViewController,
                 //            let object = fetchedResultsController.object(at: indexPath)
                 //                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 //                controller.detailItem = object
-//                detailVC.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                detailVC.navigationItem.leftItemsSupplementBackButton = true
+                //                detailVC.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                //                detailVC.navigationItem.leftItemsSupplementBackButton = true
             }
         }
     }
@@ -146,36 +160,32 @@ class SResultsTableController: UIViewController,
             return []
         }
         
+        
         var predicates: [NSPredicate] = []
         
-//        var namePredicates = arrayOfSearchs.filter({ $0.count > 0 }).map( {
-//            return NSPredicate(format: "name CONTAINS[cd] %@  ", $0.lowercased())
-//        } )
-        
-        if let currentTerm = self.terms.first?.text {
-            let termPredicate = NSPredicate(format: "term.text =  %@ ", currentTerm)
-            predicates.append(termPredicate)
+        if searchCriteriaChecked.count > 0 {
             
-//            let termPresen = NSSortDescriptor(key: "term.text", ascending: true) { (t1, t2) -> ComparisonResult in
-//
-//                let t1 = t1 as? String ?? ""
-//                let t2 = t2 as? String ?? ""
-//
-//                let index = [t1, t2].index(of: currentTerm)
-//
-//                if t1 == t2 || index == nil {
-//                    return .orderedSame
-//                } else if index == 1 {
-//                    return .orderedAscending
-//                } else  {
-//                    return .orderedDescending
-//                }
-//            }
-//
-//            fetchRequest.sortDescriptors = [termPresen]
+            
+            for searchCriteria in searchCriteriaChecked {
+                
+                if searchCriteria.name == .zip_code {
+                    predicates.append(NSPredicate(format: " \(searchCriteria.name.storeKeyPath) CONTAINS[cd] '\(searchString.trimmingCharacters(in: .whitespaces))'  "))
+                }
+                
+                predicates.append(NSPredicate(format: " \(searchCriteria.name.storeKeyPath) CONTAINS[cd] '\(searchString)'  "))
+            }
+            
+        }else{
+            
+            if let currentTerm = self.terms.first?.text {
+                let termPredicate = NSPredicate(format: "term.text =  %@ ", currentTerm)
+                predicates.append(termPredicate)
+                
+            }
         }
         
-        fetchRequest.predicate          = NSCompoundPredicate(andPredicateWithSubpredicates:predicates)
+        
+        fetchRequest.predicate          = NSCompoundPredicate(orPredicateWithSubpredicates:predicates)
         
         let distanceSortDescriptor      = NSSortDescriptor(key: "distance", ascending: true)
         let ratingSortDescriptor        = NSSortDescriptor(key: "rating", ascending: false)
@@ -189,7 +199,7 @@ class SResultsTableController: UIViewController,
         
         return []
     }
-
+    
     lazy var mContext : NSManagedObjectContext = {
         return DBUtils.sharedInstance.managedObjectContext
     }()
