@@ -165,7 +165,6 @@ UITableViewDelegate {
         
         if searchCriteriaChecked.count > 0 {
             
-            
             for searchCriteria in searchCriteriaChecked {
                 
                 if searchCriteria.name == .zip_code {
@@ -178,7 +177,7 @@ UITableViewDelegate {
         }else{
             
             if let currentTerm = self.terms.first?.text {
-                let termPredicate = NSPredicate(format: "term.text =  %@ ", currentTerm)
+                let termPredicate = NSPredicate(format: "term.text CONTAINS[cd] '\(currentTerm)' " )
                 predicates.append(termPredicate)
                 
             }

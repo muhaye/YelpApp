@@ -132,7 +132,7 @@ class ApiManager {
                                 
                                 // Associated Term
                                 if let aTerm: Term = NSManagedObject.managedObjectUpsert(term, uKey: "text"),
-                                    self.searchCriteriaChecked.count > 0,
+                                    self.searchCriteriaChecked.count == 0,
                                     term.isEmpty == false {
                                     business.term = aTerm
                                 }
