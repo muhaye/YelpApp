@@ -1,4 +1,4 @@
-//
+    //
 //  SResultsTableController.swift
 //
 
@@ -175,7 +175,6 @@ UITableViewDelegate {
             if let currentTerm = self.terms.first?.text {
                 let termPredicate = NSPredicate(format: "term.text CONTAINS[cd] '\(currentTerm)' " )
                 predicates.append(termPredicate)
-                
             }
         }
         

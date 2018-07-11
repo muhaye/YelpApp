@@ -10,4 +10,10 @@ import Foundation
 
 struct JCategory: Codable {
     let title: String
+    let alias: String
+    let parent_aliases: [String]?
+}
+
+struct JCategoryRes: Codable {
+    let categories: [JCategory]
 }

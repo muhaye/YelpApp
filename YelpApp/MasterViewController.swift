@@ -18,6 +18,7 @@ class MasterViewController: UITableViewController,
     UISearchControllerDelegate,
     LocationUser {
 
+    @IBOutlet weak var cuisine: UIBarButtonItem!
     
     func notAuthorize() {
 
@@ -96,17 +97,23 @@ class MasterViewController: UITableViewController,
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-//            let object = fetchedResultsController.object(at: indexPath)
-//                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-//                controller.detailItem = object
-//                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
+
         } else if segue.identifier == "showAdvanceSearch" {
             
             if let advanceSeachVC = segue.destination as? AdvanceSearchVC {
                 advanceSeachVC.popoverPresentationController!.delegate = self
+            }
+        }else if segue.identifier == "showCuisine" {
+            
+            if let foodCategoryVC = segue.destination as? FoodCategoryVC {
+                foodCategoryVC.popoverPresentationController!.delegate = self
+                foodCategoryVC.userDidSelectCuisine = { (selectedCuine) in
+                    if let selectedCuine = selectedCuine {
+                        self.cuisine.title = selectedCuine
+                    } else {
+                        self.cuisine.title = "Cuisine"
+                    }
+                }
             }
         }
     }
@@ -114,41 +121,6 @@ class MasterViewController: UITableViewController,
     // MARK: - Table View
 
 
-    // MARK: - Fetched results controller
-
-//    var fetchedResultsController: NSFetchedResultsController<Event> {
-//        if _fetchedResultsController != nil {
-//            return _fetchedResultsController!
-//        }
-//
-//        let fetchRequest: NSFetchRequest<Event> = Event.fetchRequest()
-//
-//        // Set the batch size to a suitable number.
-//        fetchRequest.fetchBatchSize = 20
-//
-//        // Edit the sort key as appropriate.
-//        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
-//
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//
-//        // Edit the section name key path and cache name if appropriate.
-//        // nil for section name key path means "no sections".
-//        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
-//        aFetchedResultsController.delegate = self
-//        _fetchedResultsController = aFetchedResultsController
-//
-//        do {
-//            try _fetchedResultsController!.performFetch()
-//        } catch {
-//             // Replace this implementation with code to handle the error appropriately.
-//             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//             let nserror = error as NSError
-//             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//        }
-//
-//        return _fetchedResultsController!
-//    }
-//    var _fetchedResultsController: NSFetchedResultsController<Event>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -178,6 +150,7 @@ class MasterViewController: UITableViewController,
         self.resultsTableController?.userDidSelectTerm = { (selectedTerm: String) in
             self.searchController.searchBar.text = selectedTerm
         }
+        
         self.tableView.reloadData()
     }
     
@@ -186,6 +159,7 @@ class MasterViewController: UITableViewController,
         Session.shared.sortCriteria = sortor.selectedSegmentIndex == 0 ? .distance : .rating
         
     }
+
 }
 
 

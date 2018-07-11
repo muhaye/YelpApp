@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -99,14 +100,26 @@
                                 </connections>
                             </segmentedControl>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="LqH-ib-uuO">
-                            <connections>
-                                <segue destination="1V9-9H-Fn0" kind="popoverPresentation" identifier="showAdvanceSearch" popoverAnchorBarButtonItem="LqH-ib-uuO" id="EcM-aY-7tU">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="LqH-ib-uuO">
+                                <connections>
+                                    <segue destination="1V9-9H-Fn0" kind="popoverPresentation" identifier="showAdvanceSearch" popoverAnchorBarButtonItem="LqH-ib-uuO" id="EcM-aY-7tU">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Cuisine" id="bGs-eE-Zxa">
+                                <connections>
+                                    <segue destination="LP7-Zy-Igt" kind="popoverPresentation" identifier="showCuisine" popoverAnchorBarButtonItem="bGs-eE-Zxa" id="X3Y-7X-Hfo">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cuisine" destination="bGs-eE-Zxa" id="eQx-X8-d0a"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
@@ -175,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVL-0p-9Fx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1394" y="-840"/>
+            <point key="canvasLocation" x="1445" y="-883"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -447,6 +460,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Pi-2a-sKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="808.79999999999995" y="127.28635682158921"/>
+        </scene>
+        <!--Food CategoryVC-->
+        <scene sceneID="DWz-Ay-SHn">
+            <objects>
+                <viewController storyboardIdentifier="FoodCategory" modalPresentationStyle="overCurrentContext" id="LP7-Zy-Igt" customClass="FoodCategoryVC" customModule="YelpApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yWE-K8-II4">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="400"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CYU-b2-n0J">
+                                <rect key="frame" x="0.0" y="50" width="200" height="350"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FoodCategoryCell" textLabel="Dh5-HI-SG7" rowHeight="71" style="IBUITableViewCellStyleDefault" id="1sC-4z-0Zc" userLabel="AdvenceSearchCell">
+                                        <rect key="frame" x="0.0" y="28" width="200" height="71"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1sC-4z-0Zc" id="sYQ-O7-AIf">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="71"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dh5-HI-SG7">
+                                                    <rect key="frame" x="15" y="0.0" width="170" height="71"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="LP7-Zy-Igt" id="HiO-HZ-4WO"/>
+                                    <outlet property="delegate" destination="LP7-Zy-Igt" id="eaG-Zq-CPp"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rz-hj-DVg">
+                                <rect key="frame" x="20" y="10" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="LP7-Zy-Igt" eventType="touchUpInside" id="C5V-Qr-nDH"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Wfq-QF-gPX">
+                                <rect key="frame" x="96" y="15" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7rz-hj-DVg" firstAttribute="top" secondItem="DV3-xr-R6Q" secondAttribute="top" constant="10" id="3s8-F9-a4w"/>
+                            <constraint firstItem="DV3-xr-R6Q" firstAttribute="bottom" secondItem="CYU-b2-n0J" secondAttribute="bottom" id="BEq-dx-iUe"/>
+                            <constraint firstItem="CYU-b2-n0J" firstAttribute="top" secondItem="7rz-hj-DVg" secondAttribute="bottom" constant="10" id="Gg3-8a-pev"/>
+                            <constraint firstItem="7rz-hj-DVg" firstAttribute="leading" secondItem="DV3-xr-R6Q" secondAttribute="leading" constant="20" id="ToM-kE-yuS"/>
+                            <constraint firstItem="DV3-xr-R6Q" firstAttribute="trailing" secondItem="CYU-b2-n0J" secondAttribute="trailing" id="gvc-9w-jFM"/>
+                            <constraint firstItem="Wfq-QF-gPX" firstAttribute="centerY" secondItem="7rz-hj-DVg" secondAttribute="centerY" id="k7G-t4-d2G"/>
+                            <constraint firstItem="CYU-b2-n0J" firstAttribute="leading" secondItem="DV3-xr-R6Q" secondAttribute="leading" id="tcG-Fx-prl"/>
+                            <constraint firstItem="Wfq-QF-gPX" firstAttribute="leading" secondItem="7rz-hj-DVg" secondAttribute="trailing" constant="28" id="va0-hb-ahd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DV3-xr-R6Q"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="200" height="400"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="200" height="400"/>
+                    <connections>
+                        <outlet property="spiner" destination="Wfq-QF-gPX" id="2ii-gJ-gSC"/>
+                        <outlet property="tableView" destination="CYU-b2-n0J" id="qJZ-aI-Xu4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tUg-O1-zox" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444.8" y="-542.42878560719646"/>
         </scene>
     </scenes>
     <resources>

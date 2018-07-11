@@ -20,6 +20,6 @@ class Session {
                                SearchCriteria(name: .zip_code)]
     
     var sortCriteria: SortCriteria = .distance
-    
+    var foodCategory: Category?
     var coordinate: (lat: Double, lon: Double)?
 }

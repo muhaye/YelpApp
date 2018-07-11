@@ -13,8 +13,14 @@
         <relationship name="term" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Term" inverseName="business" inverseEntity="Term" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
+        <attribute name="alias" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="business" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Business" inverseName="categoires" inverseEntity="Business" syncable="YES"/>
+        <relationship name="parent_aliases" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CategoryParents" inverseName="category" inverseEntity="CategoryParents" syncable="YES"/>
+    </entity>
+    <entity name="CategoryParents" representedClassName="CategoryParents" syncable="YES" codeGenerationType="class">
+        <attribute name="alias" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="parent_aliases" inverseEntity="Category" syncable="YES"/>
     </entity>
     <entity name="Hour" representedClassName="Hour" syncable="YES" codeGenerationType="class">
         <attribute name="hours_type" optional="YES" attributeType="String" syncable="YES"/>
@@ -40,10 +46,11 @@
     </entity>
     <elements>
         <element name="Business" positionX="-36" positionY="144" width="128" height="193"/>
-        <element name="Category" positionX="243" positionY="144" width="128" height="73"/>
+        <element name="Category" positionX="243" positionY="144" width="128" height="103"/>
         <element name="Hour" positionX="34" positionY="360" width="128" height="88"/>
         <element name="Location" positionX="288" positionY="360" width="128" height="103"/>
         <element name="Open" positionX="-72" positionY="489" width="128" height="118"/>
         <element name="Term" positionX="108" positionY="297" width="128" height="75"/>
+        <element name="CategoryParents" positionX="126" positionY="315" width="128" height="75"/>
     </elements>
 </model>

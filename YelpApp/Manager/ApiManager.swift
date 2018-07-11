@@ -16,6 +16,8 @@ public enum Service : String {
     case businessDetail     = "/businesses/{id}" // /{id}
     case autocomplete       = "/autocomplete"
     case businessMatches    = "/matches"
+    case categories         = "/categories"
+
 }
 
 class ApiManager {
@@ -27,6 +29,65 @@ class ApiManager {
     }
     
     init() {}
+    
+    func categories(completion : @escaping ()-> Void) {
+        
+        let url = "\(GlobalConstants.api)\(Service.categories.rawValue)"
+        print("request \( url) ")
+        
+        Alamofire.request(url,
+                          method: .get,
+                          encoding: URLEncoding.queryString,
+                          headers: headers
+            )
+            .validate(statusCode: 200..<300)
+            .response { (response) in
+                
+                if  let data = response.data {
+                    
+                    do {
+                        print("response \(String(describing: String(data: data, encoding: .utf8)))")
+                        
+                        let jsonDecoder = JSONDecoder()
+                        let jCategoryRes = try jsonDecoder.decode(JCategoryRes.self, from: data)
+                        
+                        for jCategory in jCategoryRes.categories {
+                            
+                            if let ps = jCategory.parent_aliases {
+                                for jParent in  ps {
+                                    if jParent == "food" {
+                                        print("\(jCategory.title)  jParent.alias == \(jParent )" )
+                                        
+                                        if let category: Category = NSManagedObject.managedObjectUpsert(jCategory.alias, uKey: "alias") {
+                                            category.alias = jCategory.alias
+                                            category.title = jCategory.title
+                                            category.parent_aliases = []
+                                            
+                                            if let parent: CategoryParents = NSManagedObject.managedObjectUpsert(jParent, uKey: "alias") {
+                                                category.addToParent_aliases(parent)
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            
+   
+                        
+                        }
+                        DBUtils.sharedInstance.saveContext()
+
+                        
+                    } catch {
+                        print("response \(error.localizedDescription)")
+                    }
+                    
+                }
+                
+                completion()
+        }
+        
+    }
     
     func autocomplete(text: String, completion : @escaping (_ terms: [JTerm])-> Void) {
         
@@ -73,6 +134,7 @@ class ApiManager {
         }
     }
     
+    
     func search(term: String = "", search: String = "" , completion : @escaping ()-> Void) {
         
         let service: Service = searchCriteriaChecked.count > 0 ? .businessMatches : .business
@@ -92,6 +154,10 @@ class ApiManager {
         if service == .business {
             parameters [ "sort_by"] = Session.shared.sortCriteria
             parameters ["term"]  =  term
+            
+            if let category = Session.shared.foodCategory {
+                parameters ["categories"] = "\(category)"
+            }
             
         } else { // . businessMatches
             
@@ -138,6 +204,7 @@ class ApiManager {
                                     for jcat in categories {
                                         if let category: Category = NSManagedObject.new() {
                                             category.title = jcat.title
+                                            category.alias = jcat.alias
                                             business.addToCategoires(category)
                                         }
                                     }
