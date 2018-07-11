@@ -12,6 +12,7 @@ import FloatRatingView
 class DetailViewController: UIViewController {
 
     var business: Business?
+    let weekDay = ["Sunday", "Monday", "Tuesday", "Wendsday", "Thurstday", "Friday", "Saturday"]
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
@@ -29,6 +30,7 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         
+
         /** Note: With the exception of contentMode, type and delegate,
          all properties can be set directly in Interface Builder **/
         // floatRatingView.delegate = self
@@ -46,10 +48,26 @@ class DetailViewController: UIViewController {
                 if let hours = b.hours?.allObjects as? [Hour] {
                     var hrs = ""
                     for hour in hours {
-                        for open in  hour.open?.allObjects as? [Open]  ?? [] {
-                            if hrs.isEmpty { hrs = "Hours of operation\n" }
-                            hrs += "\t\(open.day ) \(open.start ?? "" ) -> \(open.end ?? "" ) \n"
+                        
+                        if let hour = hour.open?.allObjects as? [Open] {
+                            
+                            for open in hour.sorted(by: { (l, r) -> Bool in
+                                l.day < r.day
+                            }) {
+                                if var start: String = open.start,
+                                    var end: String = open.end {
+                                    
+                                    if hrs.isEmpty { hrs = "Hours of operation\n" }
+                                    
+                                    start.insert("h", at:  start.index( start.startIndex, offsetBy: 2))
+                                    end.insert("h", at:   end.index( end.startIndex, offsetBy: 2) )
+                                    
+                                    hrs += "\t\( self.weekDay[Int(open.day)]) "
+                                    hrs += "\(start) -> \(end) \n"
+                                }
+                            }
                         }
+   
                     }
                     self.hours.text = hrs
                 }
@@ -65,7 +83,6 @@ class DetailViewController: UIViewController {
                     }
                     self.categories.text = cgs
                 }
-                
             }
             
             self.floatRatingView.rating = b.rating
@@ -144,8 +161,7 @@ class DetailViewController: UIViewController {
         
         self.dismiss(animated: true)
     }
-    
-
-
 }
+
+
 
