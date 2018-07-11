@@ -14,12 +14,12 @@ extension NSManagedObject {
         return DBUtils.sharedInstance.managedObjectContext
     }
 
-    class func managedObjectUpsert<T: NSManagedObject>(_ id: String) -> T? {
+    class func managedObjectUpsert<T: NSManagedObject>(_ id: String, uKey: String = "objectId" ) -> T? {
         
         if let entityName = T.entity().name {
             
             let fetchRequest        = NSFetchRequest<T>(entityName: entityName )
-            let predicate           = NSPredicate(format: "objectId = %@", id )
+            let predicate           = NSPredicate(format: "\(uKey) = %@", id )
             fetchRequest.predicate  = predicate
             do{
                 let results = try managedObjectContext.fetch(fetchRequest)
@@ -28,6 +28,7 @@ extension NSManagedObject {
                     return managedObject
                 } else {
                     let managedObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: managedObjectContext)
+                    managedObject.setValue(id, forKey: uKey)
                     return managedObject as? T
                 }
                 

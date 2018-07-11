@@ -10,6 +10,7 @@
         <relationship name="categoires" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="business" inverseEntity="Category" syncable="YES"/>
         <relationship name="hours" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hour" inverseName="business" inverseEntity="Hour" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" syncable="YES"/>
+        <relationship name="term" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Term" inverseName="business" inverseEntity="Term" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,11 +34,16 @@
         <attribute name="start" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="hour" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Hour" inverseName="open" inverseEntity="Hour" syncable="YES"/>
     </entity>
+    <entity name="Term" representedClassName="Term" syncable="YES" codeGenerationType="class">
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="business" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Business" inverseName="term" inverseEntity="Business" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Business" positionX="-36" positionY="144" width="128" height="178"/>
+        <element name="Business" positionX="-36" positionY="144" width="128" height="193"/>
         <element name="Category" positionX="243" positionY="144" width="128" height="73"/>
         <element name="Hour" positionX="34" positionY="360" width="128" height="88"/>
         <element name="Location" positionX="288" positionY="360" width="128" height="103"/>
         <element name="Open" positionX="-72" positionY="489" width="128" height="118"/>
+        <element name="Term" positionX="108" positionY="297" width="128" height="75"/>
     </elements>
 </model>

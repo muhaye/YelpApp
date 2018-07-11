@@ -23,11 +23,11 @@ public enum Service : String {
 
 }
 
-open class ApiManager {
+class ApiManager {
     
     let headers = [ "Authorization": "Bearer \(GlobalConstants.clientKey)" ]
     
-    public init() {}
+    init() {}
 
     
     func autocomplete(text: String, completion : @escaping (_ terms: [JTerm])-> Void) {
@@ -88,7 +88,7 @@ open class ApiManager {
         let parameters: Parameters = [
             "latitude": "\(coordinate.lat)",
             "longitude": "\(coordinate.lon)",
-            "term":  term
+            "term": term
         ]
         
         Alamofire.request(url,
@@ -102,10 +102,10 @@ open class ApiManager {
                 
                 if  let data = response.data {
                     do {
-                        let jsonDecoder = JSONDecoder()
+                        
                         print("response \(String(describing: String(data: data, encoding: .utf8)))")
 
-                        //jsonDecoder.dateDecodingStrategy = PublishDate.dateDecodingStrategy()
+                        let jsonDecoder = JSONDecoder()
                         let jBusinessRes = try jsonDecoder.decode(JBusinessRes.self, from: data)
                         for jBusiness in jBusinessRes.businesses {
                             
@@ -115,6 +115,11 @@ open class ApiManager {
                                 
                                 business.location = NSManagedObject.new()
                                 business.location?.populate(with: jBusiness.location)
+                                
+                                // Associated Term
+                                if let aTerm: Term = NSManagedObject.managedObjectUpsert(term, uKey: "text"){
+                                    business.term = aTerm
+                                }
                                 
                                 if let categories = jBusiness.categories {
                                     business.categoires = []
@@ -178,24 +183,19 @@ open class ApiManager {
                                                 open.day            = Int32(jopen.day)
                                                 open.start          = jopen.start
                                                 open.end            = jopen.end
-                                                //open.is_overnight   = jopen.is_overnight
                                                 hour.addToOpen(open)
                                             }
                                         }
                                     }
-                                    
                                 }
                             }
                         }
                         
-                        
                         DBUtils.sharedInstance.saveContext()
                         
-                        //completion(publishDate)
                     } catch {
                         
                         print("response \(error.localizedDescription)")
-                        completion()
                     }
                     
                     completion()
@@ -205,8 +205,5 @@ open class ApiManager {
                 }
         }
     }
-    
-    
-    
 }
 
