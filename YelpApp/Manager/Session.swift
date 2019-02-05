@@ -21,5 +21,5 @@ class Session {
     
     var sortCriteria: SortCriteria = .distance
     var foodCategory: Category?
-    var coordinate: (lat: Double, lon: Double)?
+    var coordinate: (lat: Double, lon: Double)? = (45.512337, -73.552768) // Default value
 }
